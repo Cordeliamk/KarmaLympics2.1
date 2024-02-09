@@ -22,17 +22,25 @@ namespace KarmaLympics2._1.Data
             modelBuilder.Entity<Team>()
                 .HasMany(e => e.Challenges)
                 .WithMany(e => e.Teams)
-                .UsingEntity<TeamChallenge>( e =>
+                .UsingEntity<TeamChallenge>(e =>
             {
                 e.HasOne(tc => tc.Team)
                     .WithMany()
                     .OnDelete(DeleteBehavior.Cascade); // Cascade delete when Team is deleted
+
+                modelBuilder.Entity<Occasion>()
+              .HasMany(o => o.Teams)
+              .WithOne()
+              .OnDelete(DeleteBehavior.Cascade);
+
+
+                modelBuilder.Entity<Occasion>()
+                    .HasMany(o => o.Challenges)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
         }
-
-
-
 
 
 

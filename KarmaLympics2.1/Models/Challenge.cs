@@ -10,8 +10,6 @@ namespace KarmaLympics2._1.Models
         public int MaxPoints { get; set; }
         public int GivenPoints { get; set; }
         public string? SolutionText { get; set; }
-        public List<Video>? Video { get; set; }
-        public List<Image>? Image { get; set; }
         public int OccasionId { get; set; }
         public Occasion Occasion { get; set; }
         public List<Team> Teams { get; set; }
