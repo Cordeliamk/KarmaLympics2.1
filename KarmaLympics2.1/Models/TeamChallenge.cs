@@ -9,5 +9,6 @@
         public string Answer { get; set; }
         public string PicturePath { get; set; } 
         public string VideoPath { get; set; }
+        public bool ApprovalStatus { get; set; }
     }
 }
