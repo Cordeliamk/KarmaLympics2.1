@@ -1,9 +1,10 @@
 ﻿using KarmaLympics2._1.Data;
+using KarmaLympics2._1.Interfaces;
 using KarmaLympics2._1.Models;
 
 namespace KarmaLympics2._1.Repository
 {
-    public class TeamRepository
+    public class TeamRepository :ITeamRepository
     {
         private readonly DataContext _context;
         public TeamRepository(DataContext context)

@@ -1,5 +1,7 @@
 
 using KarmaLympics2._1.Data;
+using KarmaLympics2._1.Interfaces;
+using KarmaLympics2._1.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace KarmaLympics2._1
@@ -13,6 +15,8 @@ namespace KarmaLympics2._1
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+            builder.Services.AddTransient<Seed>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -22,6 +26,20 @@ namespace KarmaLympics2._1
             });
 
             var app = builder.Build();
+
+            if (args.Length == 1 && args[0].ToLower() == "seeddata")
+                SeedData(app);
+
+            void SeedData(IHost app)
+            {
+                var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+                using (var scope = scopedFactory.CreateScope())
+                {
+                    var service = scope.ServiceProvider.GetService<Seed>();
+                    service.SeedDataContext();
+                }
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
