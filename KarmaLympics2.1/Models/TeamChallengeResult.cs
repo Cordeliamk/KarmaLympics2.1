@@ -2,7 +2,6 @@
 {
     public class TeamChallengeResult
     {
-       
             public int Id { get; set; }
 
             // Foreign key properties

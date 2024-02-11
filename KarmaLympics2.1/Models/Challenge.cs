@@ -8,8 +8,9 @@ namespace KarmaLympics2._1.Models
         public string? ChallengeDescription { get; set; }
         public int MaxPoints { get; set; }
         public int OccasionId { get; set; }
+
+        //Refrence keys
         public Occasion Occasion { get; set; }
-        public List<Team> Teams { get; set; }
         public List<TeamChallenge> TeamChallenges { get; set; }
     }
 }

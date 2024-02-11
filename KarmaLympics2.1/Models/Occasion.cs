@@ -10,7 +10,6 @@ namespace KarmaLympics2._1.Models
         public string HostName { get; set; }
         public string HostMail { get; set; }
 
-
         //Refrence keys
         public List<Team> Teams { get; set; }
         public List<Challenge> Challenges { get; set; }

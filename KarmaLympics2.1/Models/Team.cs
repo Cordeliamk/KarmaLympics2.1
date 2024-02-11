@@ -10,7 +10,6 @@ namespace KarmaLympics2._1.Models
 
         //Reference Keys
         public Occasion Occasion { get; set; }
-        public List<Challenge> Challenges { get; set; }
         public List<TeamChallenge> TeamChallenges { get; set; }
     }
 }
