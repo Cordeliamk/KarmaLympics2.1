@@ -46,7 +46,7 @@ namespace KarmaLympics2._1.Repository
 
         public bool teamExists(int teamId)
         {
-            throw new NotImplementedException();
+          return _context.Teams.Any(t => t.Id ==  teamId);
         }
     }
 }
