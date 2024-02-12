@@ -12,33 +12,32 @@ namespace KarmaLympics2._1
         }
         public void SeedDataContext()
         {
-            if (!dataContext.TeamsChallenges.Any())
-            {
-                var teamChallenges = new List<TeamChallenge>()
+                var karmakarma = new Occasion
                 {
-
-                    new TeamChallenge()
-                    {
-                        Team = new Team()
-                        {
-                            TeamName = "ReadTeam",
-                            TeamUrl = "testurltest",
-                            TeamChallenges = new List<TeamChallenge>()
-
-                            {
-                                new TeamChallenge { Challenge = new Challenge() { ChallengeDescription = " Take a picture with a cow" } }
-
-                            },
-                        }
-
-                    }
-
+                    OccasionName = "Olala",
+                    OccasionDescription = " Velkommen alle sammen",
+                    HostName = "Cordelia",
+                    HostMail = "Cordelia@test.no"
 
                 };
 
-                dataContext.TeamsChallenges.AddRange(teamChallenges);
+                var redTeam = new Team
+                {
+                    TeamName = "RedTeam",
+                    TeamUrl = "testurltest"
+                };
+
+                var challenge = new Challenge
+                {
+                    ChallengeDescription = "Take a picture with a cow",
+                    MaxPoints = 24
+                };
+
+                karmakarma.Teams = new List<Team> { redTeam };
+                karmakarma.Challenges = new List<Challenge> { challenge };
+
+                dataContext.Occasions.Add(karmakarma);
                 dataContext.SaveChanges();
-            }
         }
     }
 }
