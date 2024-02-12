@@ -6,7 +6,7 @@ namespace KarmaLympics2._1.Models
     {
         public int Id { get; set; }
         public string OccasionName { get; set; }
-        public string OccasionDescription { get; set; }
+        public string? OccasionDescription { get; set; }
         public string HostName { get; set; }
         public string HostMail { get; set; }
 

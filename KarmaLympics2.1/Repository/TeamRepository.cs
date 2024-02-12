@@ -48,7 +48,7 @@ namespace KarmaLympics2._1.Repository
           return _context.Teams.Any(t => t.Id ==  teamId);
         }
 
-        int ITeamRepository.GetTeamScore(int teamId)
+        public int GetTeamScore(int teamId)
         {
                int teamScore = _context.Teams
                 .Where(t => t.Id == teamId)

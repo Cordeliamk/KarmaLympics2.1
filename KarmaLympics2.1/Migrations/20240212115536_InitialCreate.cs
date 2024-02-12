@@ -17,7 +17,7 @@ namespace KarmaLympics2._1.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OccasionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OccasionDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OccasionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HostName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HostMail = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -54,7 +54,7 @@ namespace KarmaLympics2._1.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TeamName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TeamUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TeamUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TeamScore = table.Column<int>(type: "int", nullable: false),
                     OccasionId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -75,11 +75,11 @@ namespace KarmaLympics2._1.Migrations
                 {
                     TeamId = table.Column<int>(type: "int", nullable: false),
                     ChallengeId = table.Column<int>(type: "int", nullable: false),
-                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PicturePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VideoPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PicturePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VideoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApprovalStatus = table.Column<bool>(type: "bit", nullable: false),
-                    PointsEarned = table.Column<int>(type: "int", nullable: false)
+                    PointsEarned = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
