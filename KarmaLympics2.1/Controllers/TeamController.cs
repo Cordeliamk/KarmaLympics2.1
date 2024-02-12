@@ -30,6 +30,37 @@ namespace KarmaLympics2._1.Controllers
             return Ok(teams);
         }
 
+        [HttpGet("teamId")]
+        [ProducesResponseType(200, Type = typeof(Team))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTeam(int teamId)
+        {
+            if(!_teamRepository.teamExists(teamId))
+                return NotFound();
+
+            Team team = _teamRepository.GetTeam(teamId);
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(team);
+        }
+
+        [HttpGet("{TeamId}/teamScore")]
+        [ProducesResponseType(200, Type = typeof(Team))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTeamScore(int teamId)
+        {
+            if (!_teamRepository.teamExists(teamId))
+                return NotFound();
+
+            int teamScore = _teamRepository.GetTeamScore(teamId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(teamScore);
+
+        }
+
 
     }
 }

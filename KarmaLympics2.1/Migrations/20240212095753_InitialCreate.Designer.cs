@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KarmaLympics2._1.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240211154951_InitialCreate")]
+    [Migration("20240212095753_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -92,6 +92,9 @@ namespace KarmaLympics2._1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TeamScore")
+                        .HasColumnType("int");
+
                     b.Property<string>("TeamUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -122,6 +125,9 @@ namespace KarmaLympics2._1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PointsEarned")
+                        .HasColumnType("int");
+
                     b.Property<string>("VideoPath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -131,33 +137,6 @@ namespace KarmaLympics2._1.Migrations
                     b.HasIndex("ChallengeId");
 
                     b.ToTable("TeamsChallenges");
-                });
-
-            modelBuilder.Entity("KarmaLympics2._1.Models.TeamChallengeResult", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PointsEarned")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamChallengeChallengeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamChallengeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamChallengeTeamId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeamChallengeTeamId", "TeamChallengeChallengeId");
-
-                    b.ToTable("TeamChallengeResults");
                 });
 
             modelBuilder.Entity("KarmaLympics2._1.Models.Challenge", b =>
@@ -199,17 +178,6 @@ namespace KarmaLympics2._1.Migrations
                     b.Navigation("Challenge");
 
                     b.Navigation("Team");
-                });
-
-            modelBuilder.Entity("KarmaLympics2._1.Models.TeamChallengeResult", b =>
-                {
-                    b.HasOne("KarmaLympics2._1.Models.TeamChallenge", "TeamChallenge")
-                        .WithMany()
-                        .HasForeignKey("TeamChallengeTeamId", "TeamChallengeChallengeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TeamChallenge");
                 });
 
             modelBuilder.Entity("KarmaLympics2._1.Models.Challenge", b =>

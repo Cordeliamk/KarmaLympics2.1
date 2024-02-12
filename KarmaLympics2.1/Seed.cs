@@ -33,6 +33,13 @@ namespace KarmaLympics2._1
                     MaxPoints = 24
                 };
 
+            TeamChallenge teamChallenge = new TeamChallenge
+            {
+                Team = redTeam,
+                Challenge = challenge,
+                PointsEarned = 24
+            };
+
                 karmakarma.Teams = new List<Team> { redTeam };
                 karmakarma.Challenges = new List<Challenge> { challenge };
 

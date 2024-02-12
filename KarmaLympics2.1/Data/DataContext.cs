@@ -12,11 +12,10 @@ namespace KarmaLympics2._1.Data
 
         }
         public DbSet<Challenge> Challenges { get; set; }
-
         public DbSet<Occasion> Occasions { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamChallenge> TeamsChallenges { get; set; }
-        public IEnumerable<object> TeamChallangeResult { get; internal set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
