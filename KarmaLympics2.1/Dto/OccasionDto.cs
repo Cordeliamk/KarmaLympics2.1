@@ -1,8 +1,6 @@
-﻿
-
-namespace KarmaLympics2._1.Models
+﻿namespace KarmaLympics2._1.Dto
 {
-    public class Occasion
+    public class OccasionDto
     {
         public int Id { get; set; }
         public string OccasionName { get; set; }
@@ -10,9 +8,5 @@ namespace KarmaLympics2._1.Models
         public string HostName { get; set; }
         public string HostMail { get; set; }
         public string? OccasionUrl { get; set; }
-
-        //Refrence keys
-        public List<Team> Teams { get; set; }
-        public List<Challenge> Challenges { get; set; }
     }
 }

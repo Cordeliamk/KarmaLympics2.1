@@ -10,7 +10,7 @@ namespace KarmaLympics2._1.Interfaces
         Team GetTeam (string teamName);
         Team GetTeamByUrl(string teamUrl);
         int GetTeamScore(int teamId);
-        bool teamExists(int teamId);
+        bool TeamExists(int teamId);
 
 
 

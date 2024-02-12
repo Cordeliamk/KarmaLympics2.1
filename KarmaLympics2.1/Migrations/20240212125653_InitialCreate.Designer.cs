@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KarmaLympics2._1.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240212115536_InitialCreate")]
+    [Migration("20240212125653_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -36,10 +36,10 @@ namespace KarmaLympics2._1.Migrations
                     b.Property<string>("ChallengeDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MaxPoints")
+                    b.Property<int>("OccasionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OccasionId")
+                    b.Property<int>("Points")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -70,6 +70,9 @@ namespace KarmaLympics2._1.Migrations
 
                     b.Property<string>("OccasionName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OccasionUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

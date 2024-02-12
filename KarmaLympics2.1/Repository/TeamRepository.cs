@@ -43,7 +43,7 @@ namespace KarmaLympics2._1.Repository
         //    return teamScore;
         //}
 
-        public bool teamExists(int teamId)
+        public bool TeamExists(int teamId)
         {
           return _context.Teams.Any(t => t.Id ==  teamId);
         }
@@ -55,6 +55,13 @@ namespace KarmaLympics2._1.Repository
                 .Select(t => t.TeamScore)
                 .FirstOrDefault();
             return teamScore;
+        }
+
+        public string GetTeamUrl(int teamId)
+        {
+            string teamUrl = _context.Teams
+          .Where(t => t.Id == teamId).Select(t => t.TeamUrl).FirstOrDefault();
+            return teamUrl;
         }
     }
 }

@@ -43,7 +43,7 @@ namespace KarmaLympics2._1
                 var challenge = new Challenge
                 {
                     ChallengeDescription = "Take a picture with a cow",
-                    MaxPoints = 24
+                    Points = 24
                 };
 
             TeamChallenge teamChallenge = new TeamChallenge

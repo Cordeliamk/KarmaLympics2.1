@@ -39,7 +39,7 @@ namespace KarmaLympics2._1.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetTeam(int teamId)
         {
-            if(!_teamRepository.teamExists(teamId))
+            if(!_teamRepository.TeamExists(teamId))
                 return NotFound();
 
             TeamDto team = _mapper.Map<TeamDto>(_teamRepository.GetTeam(teamId));
@@ -53,7 +53,7 @@ namespace KarmaLympics2._1.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetTeamScore(int teamId)
         {
-            if (!_teamRepository.teamExists(teamId))
+            if (!_teamRepository.TeamExists(teamId))
                 return NotFound();
 
             int teamScore = _teamRepository.GetTeamScore(teamId);

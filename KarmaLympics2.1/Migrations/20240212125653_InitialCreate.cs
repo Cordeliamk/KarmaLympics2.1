@@ -19,7 +19,8 @@ namespace KarmaLympics2._1.Migrations
                     OccasionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OccasionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HostName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HostMail = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    HostMail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OccasionUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,7 +34,7 @@ namespace KarmaLympics2._1.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ChallengeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MaxPoints = table.Column<int>(type: "int", nullable: false),
+                    Points = table.Column<int>(type: "int", nullable: false),
                     OccasionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

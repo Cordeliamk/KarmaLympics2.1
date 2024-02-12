@@ -6,7 +6,7 @@ namespace KarmaLympics2._1.Models
     {
         public int Id { get; set; }
         public string? ChallengeDescription { get; set; }
-        public int MaxPoints { get; set; }
+        public int Points { get; set; }
         public int OccasionId { get; set; }
 
         //Refrence keys
