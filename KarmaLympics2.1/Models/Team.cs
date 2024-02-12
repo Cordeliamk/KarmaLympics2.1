@@ -6,6 +6,7 @@ namespace KarmaLympics2._1.Models
         public int Id { get; set; }
         public string TeamName { get; set; }
         public string TeamUrl { get; set; }
+        public int TeamScore { get; set; }
         public int OccasionId { get; set; }
 
         //Reference Keys

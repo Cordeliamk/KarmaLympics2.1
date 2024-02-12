@@ -10,5 +10,6 @@
         public string PicturePath { get; set; } 
         public string VideoPath { get; set; }
         public bool ApprovalStatus { get; set; }
+        public int PointsEarned { get; set; }
     }
 }
