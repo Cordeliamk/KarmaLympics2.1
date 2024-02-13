@@ -15,9 +15,9 @@ namespace KarmaLympics2._1.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<string>))]
-        public IActionResult GetTeamAnswer(int teamId)
+        public async Task<IActionResult> GetTeamAnswer(int teamId)
         {
-            var teamAnswers = _mapper.Map<TeamChallengeDto>(_teamChallengeRepository.GetTeamAnswer(teamId));
+            var teamAnswers = _mapper.Map<TeamChallengeDto>( await _teamChallengeRepository.GetTeamAnswer(teamId));
             if (!ModelState.IsValid)
                 return BadRequest();
             return Ok(teamAnswers);
@@ -26,9 +26,9 @@ namespace KarmaLympics2._1.Controllers
         [HttpGet("{teamId}/teamChallenge/{challengeId}")]
         [ProducesResponseType(200, Type = typeof(TeamChallenge))]
         [ProducesResponseType(400)]
-        public IActionResult GetTeamChallenge(int teamId, int challengeId)
+        public async Task<IActionResult> GetTeamChallenge(int teamId, int challengeId)
         {
-            TeamChallengeDto teamChallenge = _mapper.Map<TeamChallengeDto>(_teamChallengeRepository.GetTeamChallenge(teamId, challengeId));
+            TeamChallengeDto teamChallenge = _mapper.Map<TeamChallengeDto>( await _teamChallengeRepository.GetTeamChallenge(teamId, challengeId));
             if (!ModelState.IsValid)
                 return BadRequest();
                 return Ok(teamChallenge);
@@ -36,9 +36,9 @@ namespace KarmaLympics2._1.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<TeamChallenge>))]
-        public IActionResult GetTeamChallenges(int teamId)
+        public async Task<IActionResult> GetTeamChallenges(int teamId)
         {
-            var teamChallenges = _mapper.Map<List<TeamChallengeDto>>(_teamChallengeRepository.GetTeamChallenges(teamId));
+            var teamChallenges = _mapper.Map<List<TeamChallengeDto>>( await _teamChallengeRepository.GetTeamChallenges(teamId));
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -48,9 +48,9 @@ namespace KarmaLympics2._1.Controllers
         [HttpGet("{teamId}/teamScore/{challengeId}")]
         [ProducesResponseType(200, Type = typeof(TeamChallenge))]
         [ProducesResponseType(400)]
-        public IActionResult GetTeamPointsEarned(int teamId, int challengeId)
+        public async Task<IActionResult> GetTeamPointsEarned(int teamId, int challengeId)
         {
-            TeamChallengeDto teamPointsEarned = _mapper.Map<TeamChallengeDto>(_teamChallengeRepository.GetTeamPointsEarned(teamId, challengeId));
+            TeamChallengeDto teamPointsEarned = _mapper.Map<TeamChallengeDto>( await _teamChallengeRepository.GetTeamPointsEarned(teamId, challengeId));
             if (!ModelState.IsValid)
                 return BadRequest();
             return Ok(teamPointsEarned);

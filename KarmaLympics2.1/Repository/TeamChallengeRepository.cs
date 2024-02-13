@@ -2,6 +2,7 @@
 using KarmaLympics2._1.Interfaces;
 using KarmaLympics2._1.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 
 namespace KarmaLympics2._1.Repository
 {
@@ -9,35 +10,36 @@ namespace KarmaLympics2._1.Repository
     {
         private readonly DataContext _context = context;
 
-        public IEnumerable<string> GetTeamAnswer(int teamId)
+        public async Task<IEnumerable<string>> GetTeamAnswer(int teamId)
         {
-            var allAnswers = _context.TeamsChallenges
+            var allAnswers = await _context.TeamsChallenges
                .Where(tc => tc.TeamId == teamId)
                .SelectMany(tc => new[] { tc.Answer, tc.PicturePath, tc.VideoPath })
-               .Where(answer => !string.IsNullOrEmpty(answer));
+               .Where(answer => !string.IsNullOrEmpty(answer))
+               .ToListAsync();
 
-                return allAnswers;
+                return allAnswers.AsEnumerable();
         }
 
-        public TeamChallenge GetTeamChallenge(int teamId, int challengeId)
+        public async Task<TeamChallenge> GetTeamChallenge(int teamId, int challengeId)
         {
-            var teamChallenge = _context.TeamsChallenges
-            .FirstOrDefault(t => t.TeamId == teamId && t.ChallengeId == challengeId);
+            var teamChallenge = await _context.TeamsChallenges
+            .FirstOrDefaultAsync(t => t.TeamId == teamId && t.ChallengeId == challengeId);
 
             return teamChallenge ?? throw new Exception($"TeamChallenge with TeamId {teamId} and ChallengeId {challengeId} not found.");
         }
 
-        public ICollection<TeamChallenge> GetTeamChallenges(int teamId)
+        public async Task<ICollection<TeamChallenge>> GetTeamChallenges(int teamId)
         {
-           return _context.TeamsChallenges.OrderBy(tc => tc.TeamId).ToList();
+           return await _context.TeamsChallenges.OrderBy(tc => tc.TeamId).ToListAsync();
         }
 
-        public int GetTeamPointsEarned(int teamId, int challengeId)
+        public async Task<int> GetTeamPointsEarned(int teamId, int challengeId)
         {
-            int pointsEarned = _context.TeamsChallenges
+            int pointsEarned = await _context.TeamsChallenges
                 .Where(tc => tc.TeamId == teamId && tc.ChallengeId == challengeId)
                 .Select(tc => tc.PointsEarned)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
             return pointsEarned;
         }
     }
