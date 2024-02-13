@@ -1,6 +1,7 @@
 ﻿using KarmaLympics2._1.Data;
 using KarmaLympics2._1.Interfaces;
 using KarmaLympics2._1.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace KarmaLympics2._1.Repository
 {
@@ -18,25 +19,37 @@ namespace KarmaLympics2._1.Repository
                .Where(tc => tc.TeamId == teamId)
                .SelectMany(tc => new[] { tc.Answer, tc.PicturePath, tc.VideoPath })
                .Where(answer => !string.IsNullOrEmpty(answer));
-
-            return allAnswers;
+           
+            
+                return allAnswers;
+            
         }
 
         public TeamChallenge GetTeamChallenge(int teamId, int challengeId)
         {
-            return _context.TeamsChallenges
-                .Where(t =>t.TeamId == teamId && t.ChallengeId == challengeId)
-                .FirstOrDefault();
+            var teamChallenge = _context.TeamsChallenges
+            .FirstOrDefault(t => t.TeamId == teamId && t.ChallengeId == challengeId);
+
+            if (teamChallenge == null)
+            {
+                throw new Exception($"TeamChallenge with TeamId {teamId} and ChallengeId {challengeId} not found.");
+            }
+
+            return teamChallenge;
         }
 
         public ICollection<TeamChallenge> GetTeamChallenges(int teamId)
         {
-            throw new NotImplementedException();
+           return _context.TeamsChallenges.OrderBy(tc => tc.TeamId).ToList();
         }
 
         public int GetTeamPointsEarned(int teamId)
         {
-            throw new NotImplementedException();
+            int pointsEarned = _context.TeamsChallenges
+                .Where(tc => tc.TeamId == teamId)
+                .Select(tc => tc.PointsEarned)
+                .FirstOrDefault();
+            return pointsEarned;
         }
     }
 }

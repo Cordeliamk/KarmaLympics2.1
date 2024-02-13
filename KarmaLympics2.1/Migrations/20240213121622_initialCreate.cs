@@ -5,7 +5,7 @@
 namespace KarmaLympics2._1.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -80,7 +80,7 @@ namespace KarmaLympics2._1.Migrations
                     PicturePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VideoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApprovalStatus = table.Column<bool>(type: "bit", nullable: false),
-                    PointsEarned = table.Column<int>(type: "int", nullable: true)
+                    PointsEarned = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

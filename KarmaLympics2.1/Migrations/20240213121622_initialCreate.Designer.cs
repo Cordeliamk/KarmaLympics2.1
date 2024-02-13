@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KarmaLympics2._1.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240212125653_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240213121622_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

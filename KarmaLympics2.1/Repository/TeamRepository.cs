@@ -16,7 +16,7 @@ namespace KarmaLympics2._1.Repository
         {
             return _context.Teams.Where(t => t.Id == id).FirstOrDefault();
         }
-
+         
         public Team GetTeam(string teamName)
         {
             return _context.Teams.Where(t => t.TeamName == teamName).FirstOrDefault();

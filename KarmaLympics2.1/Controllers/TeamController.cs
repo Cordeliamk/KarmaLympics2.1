@@ -11,16 +11,10 @@ namespace KarmaLympics2._1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TeamController : ControllerBase
+    public class TeamController(ITeamRepository teamRepository, IMapper mapper) : ControllerBase
     {
-        private readonly ITeamRepository _teamRepository;
-        private readonly IMapper _mapper;
-
-        public TeamController(ITeamRepository teamRepository, IMapper mapper)
-        {
-            _teamRepository = teamRepository;
-            _mapper = mapper;
-        }
+        private readonly ITeamRepository _teamRepository = teamRepository;
+        private readonly IMapper _mapper = mapper;
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Team>))]
