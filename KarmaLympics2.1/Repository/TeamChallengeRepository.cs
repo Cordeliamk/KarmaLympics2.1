@@ -15,13 +15,11 @@ namespace KarmaLympics2._1.Repository
                .Where(tc => tc.TeamId == teamId)
                .SelectMany(tc => new[] { tc.Answer, tc.PicturePath, tc.VideoPath })
                .Where(answer => !string.IsNullOrEmpty(answer));
-           
-            
+
                 return allAnswers;
-            
         }
 
-        public TeamChallenge GetChallengeByTeam(int teamId, int challengeId)
+        public TeamChallenge GetTeamChallenge(int teamId, int challengeId)
         {
             var teamChallenge = _context.TeamsChallenges
             .FirstOrDefault(t => t.TeamId == teamId && t.ChallengeId == challengeId);
@@ -34,10 +32,10 @@ namespace KarmaLympics2._1.Repository
            return _context.TeamsChallenges.OrderBy(tc => tc.TeamId).ToList();
         }
 
-        public int GetTeamPointsEarned(int teamId)
+        public int GetTeamPointsEarned(int teamId, int challengeId)
         {
             int pointsEarned = _context.TeamsChallenges
-                .Where(tc => tc.TeamId == teamId)
+                .Where(tc => tc.TeamId == teamId && tc.ChallengeId == challengeId)
                 .Select(tc => tc.PointsEarned)
                 .FirstOrDefault();
             return pointsEarned;

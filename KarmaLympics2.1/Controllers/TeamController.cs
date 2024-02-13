@@ -57,7 +57,5 @@ namespace KarmaLympics2._1.Controllers
 
             return Ok(teamScore);
         }
-
-
     }
 }

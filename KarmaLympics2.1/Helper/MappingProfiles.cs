@@ -9,6 +9,9 @@ namespace KarmaLympics2._1.Helper
         public MappingProfiles()
         {
             CreateMap<Team, TeamDto>();
+            CreateMap<Challenge, ChallengeDto>();
+            CreateMap<Occasion, OccasionDto>();
+            CreateMap<TeamChallenge, TeamChallengeDto>();
         }
     }
 }
