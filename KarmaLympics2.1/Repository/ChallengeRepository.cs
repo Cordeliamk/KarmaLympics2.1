@@ -4,7 +4,7 @@ using KarmaLympics2._1.Models;
 
 namespace KarmaLympics2._1.Repository
 {
-    public class ChallengeRepository(DataContext context) : IChallangeRepository
+    public class ChallengeRepository(DataContext context) : IChallengeRepository
     {
         private readonly DataContext _context = context;
 
@@ -25,6 +25,11 @@ namespace KarmaLympics2._1.Repository
         public ICollection<Challenge> GetChallenges()
         {
             return _context.Challenges.OrderBy(c => c.Id).ToList();  
+        }
+
+        public bool ChallengeExists(int challengeId)
+        {
+            return _context.Challenges.Any(c => c.Id == challengeId);
         }
     }
 }
