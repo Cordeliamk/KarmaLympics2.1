@@ -17,9 +17,9 @@ namespace KarmaLympics2._1.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Challenge>))]
-        public IActionResult GetChallenges()
+        public async Task<IActionResult> GetChallenges()
         {
-            var challenges = _mapper.Map<List<ChallengeDto>>(_challengeRepository.GetChallenges());
+            var challenges = _mapper.Map<List<ChallengeDto>>(await _challengeRepository.GetChallenges());
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -31,9 +31,9 @@ namespace KarmaLympics2._1.Controllers
         [ProducesResponseType(200, Type = typeof(Challenge))]
         [ProducesResponseType(400)]
 
-        public IActionResult GetChallenge(int challengeId)
+        public async Task<IActionResult> GetChallenge(int challengeId)
         {
-            ChallengeDto challenge = _mapper.Map<ChallengeDto>(_challengeRepository.GetChallenge(challengeId));
+            ChallengeDto challenge = _mapper.Map<ChallengeDto>( await _challengeRepository.GetChallenge(challengeId));
             if (!ModelState.IsValid)
             return BadRequest(ModelState);
             return Ok(challenge);
@@ -43,12 +43,12 @@ namespace KarmaLympics2._1.Controllers
         [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
 
-        public IActionResult GetChallengePoint(int challengeId)
+        public async Task<IActionResult> GetChallengePoint(int challengeId)
         {
-            if (!_challengeRepository.ChallengeExists(challengeId))
+            if (!await _challengeRepository.ChallengeExists(challengeId))
                 return NotFound();
 
-            int challengePoints = _challengeRepository.GetChallengePoint(challengeId);
+            int challengePoints = await _challengeRepository.GetChallengePoint(challengeId);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

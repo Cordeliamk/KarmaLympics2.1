@@ -1,6 +1,7 @@
 ﻿using KarmaLympics2._1.Data;
 using KarmaLympics2._1.Interfaces;
 using KarmaLympics2._1.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KarmaLympics2._1.Repository
 {
@@ -8,28 +9,28 @@ namespace KarmaLympics2._1.Repository
     {
         private readonly DataContext _context = context;
 
-        public Challenge GetChallenge(int id)
+        public async Task<Challenge> GetChallenge(int id)
         {
-            return _context.Challenges.Where(c => c.Id == id).FirstOrDefault();
+            return await _context.Challenges.Where(c => c.Id == id).FirstOrDefaultAsync();
         }
 
-        public int GetChallengePoint(int id)
+        public async Task<int> GetChallengePoint(int id)
         {
-            int challengePoints = _context.Challenges
+            int challengePoints = await _context.Challenges
                 .Where(c => c.Id == id)
                 .Select(c => c.Points)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
             return challengePoints;
         }
 
-        public ICollection<Challenge> GetChallenges()
+        public async Task<ICollection<Challenge>> GetChallenges()
         {
-            return _context.Challenges.OrderBy(c => c.Id).ToList();  
+            return await _context.Challenges.OrderBy(c => c.Id).ToListAsync();  
         }
 
-        public bool ChallengeExists(int challengeId)
+        public async Task<bool> ChallengeExists(int challengeId)
         {
-            return _context.Challenges.Any(c => c.Id == challengeId);
+            return await _context.Challenges.AnyAsync(c => c.Id == challengeId);
         }
     }
 }

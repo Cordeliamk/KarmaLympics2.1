@@ -40,13 +40,31 @@ namespace KarmaLympics2._1
                     TeamUrl = "testurltest"
                 };
 
+                var blueTeam = new Team
+                {
+                    TeamName = "BlueTeam",
+                    TeamUrl = "testurltest"
+                };
+
                 var challenge = new Challenge
                 {
                     ChallengeDescription = "Take a picture with a cow",
                     Points = 24
                 };
 
-            TeamChallenge teamChallenge = new TeamChallenge
+                var challenge2 = new Challenge
+                {
+                    ChallengeDescription = "Swim in the ocean",
+                    Points = 50
+                };
+
+                var challenge3 = new Challenge
+                {
+                    ChallengeDescription = "Dance with a stranger",
+                    Points = 15
+                };
+
+                TeamChallenge teamChallenge = new TeamChallenge
             {
                 Team = redTeam,
                 Challenge = challenge,
@@ -54,12 +72,45 @@ namespace KarmaLympics2._1
                 ApprovalStatus = true
             };
 
-                karmakarma.Teams = new List<Team> { redTeam };
-                karmakarma.Challenges = new List<Challenge> { challenge };
+                TeamChallenge teamChallenge2 = new TeamChallenge
+                {
+                    Team = redTeam,
+                    Challenge = challenge2,
+                    PointsEarned = 30,
+                    ApprovalStatus = true
+                };
+
+
+                TeamChallenge teamChallenge3 = new TeamChallenge
+                {
+                    Team = redTeam,
+                    Challenge = challenge3,
+                    PointsEarned = 15,
+                    ApprovalStatus = true
+                };
+
+                TeamChallenge teamChallenge4 = new TeamChallenge
+                {
+                    Team = blueTeam,
+                    Challenge = challenge3,
+                    PointsEarned = 15,
+                    ApprovalStatus = true
+                };
+
+                TeamChallenge teamChallenge5 = new TeamChallenge
+                {
+                    Team = blueTeam,
+                    Challenge = challenge2,
+                    PointsEarned = 50,
+                    ApprovalStatus = true
+                };
+
+                karmakarma.Teams = new List<Team> { redTeam, blueTeam };
+                karmakarma.Challenges = new List<Challenge> { challenge, challenge2, challenge3 };
                 
 
                _dataContext.Occasions.AddRange(karmakarma);
-                _dataContext.TeamsChallenges.AddRange(teamChallenge);
+                _dataContext.TeamsChallenges.AddRange(teamChallenge, teamChallenge2, teamChallenge3, teamChallenge4, teamChallenge5);
                _dataContext.SaveChanges();
 
                 _logger.LogInformation("Seeding completed successfully.");

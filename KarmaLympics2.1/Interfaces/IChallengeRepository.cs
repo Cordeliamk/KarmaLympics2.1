@@ -4,10 +4,10 @@ namespace KarmaLympics2._1.Interfaces
 {
     public interface IChallengeRepository
     {
-        ICollection<Challenge> GetChallenges();
-        Challenge GetChallenge(int id);
-        int GetChallengePoint(int id);
+        Task<ICollection<Challenge>> GetChallenges();
+        Task<Challenge> GetChallenge(int id);
+        Task<int> GetChallengePoint(int id);
 
-        bool ChallengeExists(int challengeId);
+        Task<bool> ChallengeExists(int challengeId);
     }
 }
