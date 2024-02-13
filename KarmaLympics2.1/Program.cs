@@ -17,7 +17,10 @@ namespace KarmaLympics2._1
             builder.Services.AddControllers();
             builder.Services.AddTransient<Seed>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddScoped<IOccasionRepository, OccasionRepository>();
             builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+            builder.Services.AddScoped<IChallengeRepository, ChallengeRepository>();
+            builder.Services.AddScoped<ITeamChallengeRepository, TeamChallengeRepository>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
