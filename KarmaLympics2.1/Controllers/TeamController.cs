@@ -18,9 +18,9 @@ namespace KarmaLympics2._1.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Team>))]
-        public IActionResult GetTeams()
+        public async Task<IActionResult> GetTeams()
         {
-            var teams = _mapper.Map<List<TeamDto>>(_teamRepository.GetTeams());
+            var teams = _mapper.Map<List<TeamDto>>( await _teamRepository.GetTeams());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -31,12 +31,12 @@ namespace KarmaLympics2._1.Controllers
         [HttpGet("teamId")]
         [ProducesResponseType(200, Type = typeof(Team))]
         [ProducesResponseType(400)]
-        public IActionResult GetTeam(int teamId)
+        public async Task<IActionResult> GetTeam(int teamId)
         {
-            if(!_teamRepository.TeamExists(teamId))
+            if(! await _teamRepository.TeamExists(teamId))
                 return NotFound();
 
-            TeamDto team = _mapper.Map<TeamDto>(_teamRepository.GetTeam(teamId));
+            TeamDto team = _mapper.Map<TeamDto>( await _teamRepository.GetTeam(teamId));
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(team);
@@ -45,12 +45,12 @@ namespace KarmaLympics2._1.Controllers
         [HttpGet("{teamId}/teamScore")]
         [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
-        public IActionResult GetTeamScore(int teamId)
+        public async Task<IActionResult> GetTeamScore(int teamId)
         {
-            if (!_teamRepository.TeamExists(teamId))
+            if (! await _teamRepository.TeamExists(teamId))
                 return NotFound();
 
-            int teamScore = _teamRepository.GetTeamScore(teamId);
+            int teamScore = await _teamRepository.GetTeamScore(teamId);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

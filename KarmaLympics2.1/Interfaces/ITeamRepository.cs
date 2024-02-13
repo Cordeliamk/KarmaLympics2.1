@@ -4,13 +4,13 @@ namespace KarmaLympics2._1.Interfaces
 {
     public interface ITeamRepository
     {
-        ICollection<Team> GetTeams();
+       Task<ICollection<Team>> GetTeams();
 
-        Team GetTeam (int id);
-        Team GetTeam (string teamName);
-        Team GetTeamByUrl(string teamUrl);
-        int GetTeamScore(int teamId);
-        bool TeamExists(int teamId);
+        Task<Team> GetTeam (int id);
+        Task<Team> GetTeam (string teamName);
+        Task<Team> GetTeamByUrl(string teamUrl);
+        Task<int> GetTeamScore(int teamId);
+        Task<bool> TeamExists(int teamId);
 
 
 

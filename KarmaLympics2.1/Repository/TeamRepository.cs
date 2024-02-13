@@ -9,22 +9,22 @@ namespace KarmaLympics2._1.Repository
     {
         private readonly DataContext _context = context;
 
-        public Team GetTeam(int id)
+        public async Task<Team> GetTeam(int id)
         {
-            return _context.Teams.Where(t => t.Id == id).FirstOrDefault();
+            return await _context.Teams.Where(t => t.Id == id).FirstOrDefaultAsync();
         }
          
-        public Team GetTeam(string teamName)
+        public async Task<Team> GetTeam(string teamName)
         {
-            return _context.Teams.Where(t => t.TeamName == teamName).FirstOrDefault();
+            return await _context.Teams.Where(t => t.TeamName == teamName).FirstOrDefaultAsync();
         }
-        public Team GetTeamByUrl(string teamUrl)
+        public async Task<Team> GetTeamByUrl(string teamUrl)
         {
-            return _context.Teams.Where(t => t.TeamUrl == teamUrl).FirstOrDefault();
+            return await _context.Teams.Where(t => t.TeamUrl == teamUrl).FirstOrDefaultAsync();
         }
-        public ICollection<Team> GetTeams()
+        public async Task<ICollection<Team>> GetTeams()
         {
-            return _context.Teams.OrderBy( t => t.Id).ToList(); 
+            return await _context.Teams.OrderBy( t => t.Id).ToListAsync(); 
         }
 
         //public object GetTeamScore(int teamId)
@@ -41,24 +41,24 @@ namespace KarmaLympics2._1.Repository
         //    return teamScore;
         //}
 
-        public bool TeamExists(int teamId)
+        public async Task<bool> TeamExists(int teamId)
         {
-          return _context.Teams.Any(t => t.Id ==  teamId);
+          return await _context.Teams.AnyAsync(t => t.Id ==  teamId);
         }
 
-        public int GetTeamScore(int teamId)
+        public async Task<int> GetTeamScore(int teamId)
         {
-               int teamScore = _context.Teams
+               int teamScore = await _context.Teams
                 .Where(t => t.Id == teamId)
                 .Select(t => t.TeamScore)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
             return teamScore;
         }
 
-        public string GetTeamUrl(int teamId)
+        public async Task<string> GetTeamUrl(int teamId)
         {
-            string teamUrl = _context.Teams
-          .Where(t => t.Id == teamId).Select(t => t.TeamUrl).FirstOrDefault();
+            string teamUrl = await _context.Teams
+          .Where(t => t.Id == teamId).Select(t => t.TeamUrl).FirstOrDefaultAsync();
             return teamUrl;
         }
     }
