@@ -1,6 +1,7 @@
 ﻿using KarmaLympics2._1.Data;
 using KarmaLympics2._1.Interfaces;
 using KarmaLympics2._1.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KarmaLympics2._1.Repository
 {
@@ -8,38 +9,38 @@ namespace KarmaLympics2._1.Repository
     {
         private readonly DataContext _context = context;
 
-        public Occasion GetOccasion(int id)
+        public async Task<Occasion> GetOccasion(int id)
         {
-            return _context.Occasions.Where(o => o.Id == id).FirstOrDefault();
+            return await _context.Occasions.Where(o => o.Id == id).FirstOrDefaultAsync();
         }
 
-        public Occasion GetOccasionByUrl(string occasionUrl)
+        public async Task<Occasion> GetOccasionByUrl(string occasionUrl)
         {
-            return _context.Occasions.Where(o => o.OccasionUrl == occasionUrl).FirstOrDefault();
+            return await _context.Occasions.Where(o => o.OccasionUrl == occasionUrl).FirstOrDefaultAsync();
         }
 
-        public string GetOccasionHostMail(int occasionId)
+        public async Task<string> GetOccasionHostMail(int occasionId)
         {
-            string hostMail = _context.Occasions
-                .Where(o => o.Id == occasionId).Select(o => o.HostMail).FirstOrDefault();
+            string hostMail = await _context.Occasions
+                .Where(o => o.Id == occasionId).Select(o => o.HostMail).FirstOrDefaultAsync();
             return hostMail;
         }
 
-        public ICollection<Occasion> GetOccasions()
+        public async Task<ICollection<Occasion>> GetOccasions()
         {
-            return _context.Occasions.OrderBy(o => o.Id).ToList();
+            return await _context.Occasions.OrderBy(o => o.Id).ToListAsync();
         }
 
-        public string GetOccasionUrl(int occasionId)
+        public async Task<string> GetOccasionUrl(int occasionId)
         {
-            string occasionUrl = _context.Occasions
-          .Where(o => o.Id == occasionId).Select(o => o.OccasionUrl).FirstOrDefault();
+            string occasionUrl = await _context.Occasions
+          .Where(o => o.Id == occasionId).Select(o => o.OccasionUrl).FirstOrDefaultAsync();
             return occasionUrl;
         }
 
-        public bool OccasionExists(int occasionId)
+        public async Task<bool> OccasionExists(int occasionId)
         {
-            return _context.Occasions.Any(o => o.Id == occasionId);
+            return await _context.Occasions.AnyAsync(o => o.Id == occasionId);
         }
     }
 }

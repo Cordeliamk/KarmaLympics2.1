@@ -16,12 +16,12 @@ namespace KarmaLympics2._1.Controllers
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Occasion>))]
 
-        public IActionResult GetOccasion(int occasionId)
+        public async Task<IActionResult> GetOccasion(int occasionId)
         {
-            if (!_occasionRepository.OccasionExists(occasionId))
+            if (!await _occasionRepository.OccasionExists(occasionId))
                 return NotFound();
 
-            OccasionDto occasion = _mapper.Map<OccasionDto>(_occasionRepository.GetOccasion(occasionId));
+            OccasionDto occasion = _mapper.Map<OccasionDto>(await _occasionRepository.GetOccasion(occasionId));
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(occasion);
@@ -30,12 +30,12 @@ namespace KarmaLympics2._1.Controllers
         [HttpGet("{occasionId}/hostMail")]
         [ProducesResponseType(200, Type = typeof(string))]
         [ProducesResponseType(400)]
-        public IActionResult GetOccasionHostMail(int occasionId)
+        public async Task<IActionResult> GetOccasionHostMail(int occasionId)
         {
-            if (!_occasionRepository.OccasionExists(occasionId))
+            if (!await _occasionRepository.OccasionExists(occasionId))
                 return NotFound();
 
-            string hostMail = _occasionRepository.GetOccasionHostMail(occasionId);
+            string hostMail = await _occasionRepository.GetOccasionHostMail(occasionId);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -46,12 +46,12 @@ namespace KarmaLympics2._1.Controllers
         [HttpGet("{occasionId}/OccasionUrl")]
         [ProducesResponseType(200, Type = typeof(string))]
         [ProducesResponseType(400)]
-        public IActionResult GetOccasionUrl(int occasionId)
+        public async Task<IActionResult> GetOccasionUrl(int occasionId)
         {
-            if (!_occasionRepository.OccasionExists(occasionId))
+            if (!await _occasionRepository.OccasionExists(occasionId))
                 return NotFound();
 
-            string occasionUrl = _occasionRepository.GetOccasionHostMail(occasionId);
+            string occasionUrl = await _occasionRepository.GetOccasionHostMail(occasionId);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
