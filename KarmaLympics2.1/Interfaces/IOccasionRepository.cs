@@ -4,13 +4,13 @@ namespace KarmaLympics2._1.Interfaces
 {
     public interface IOccasionRepository
     {
-        ICollection<Occasion> GetOccasions();
+        Task<ICollection<Occasion>> GetOccasions();
 
-        Occasion GetOccasion(int Id);
-        Occasion GetOccasionByUrl(string OccasionUrl);
-        string GetOccasionUrl(int Id);
-        string GetOccasionHostMail(int occasionId);
-        bool OccasionExists(int occasionId);
+        Task<Occasion> GetOccasion(int Id);
+        Task<Occasion> GetOccasionByUrl(string OccasionUrl);
+        Task<string> GetOccasionUrl(int Id);
+        Task<string> GetOccasionHostMail(int occasionId);
+        Task<bool> OccasionExists(int occasionId);
 
     }
 }
