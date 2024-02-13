@@ -34,8 +34,12 @@ namespace KarmaLympics2._1.Repository
         public async Task<string> GetOccasionUrl(int occasionId)
         {
             string occasionUrl = await _context.Occasions
-          .Where(o => o.Id == occasionId).Select(o => o.OccasionUrl).FirstOrDefaultAsync();
-            return occasionUrl;
+          .Where(o => o.Id == occasionId).Select(o => o.OccasionUrl).FirstAsync();
+            if (string.IsNullOrEmpty(occasionUrl))
+            {
+                Console.WriteLine("No Url found");
+            }
+            return occasionUrl; 
         }
 
         public async Task<bool> OccasionExists(int occasionId)

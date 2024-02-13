@@ -51,7 +51,7 @@ namespace KarmaLympics2._1.Controllers
             if (!await _occasionRepository.OccasionExists(occasionId))
                 return NotFound();
 
-            string occasionUrl = await _occasionRepository.GetOccasionHostMail(occasionId);
+            string occasionUrl = await _occasionRepository.GetOccasionUrl(occasionId);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
