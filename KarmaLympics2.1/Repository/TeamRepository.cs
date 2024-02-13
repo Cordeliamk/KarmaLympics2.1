@@ -29,6 +29,7 @@ namespace KarmaLympics2._1.Repository
         {
             return _context.Teams.OrderBy( t => t.Id).ToList(); 
         }
+
         //public object GetTeamScore(int teamId)
         //{
         //  Team team = _context.Teams

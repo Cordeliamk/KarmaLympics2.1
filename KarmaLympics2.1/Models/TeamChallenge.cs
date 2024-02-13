@@ -2,6 +2,7 @@
 {
     public class TeamChallenge
     {
+        public int Id { get; set; }
         public int TeamId { get; set; }
         public int ChallengeId { get; set; }
         public Team Team { get; set; }

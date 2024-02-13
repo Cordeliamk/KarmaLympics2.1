@@ -11,27 +11,36 @@ namespace KarmaLympics2._1.Repository
         {
             _context = context;
         }
-        public TeamChallenge GetTeamAnwser()
+
+        public IEnumerable<string> GetTeamAnswer(int teamId)
         {
-            var allAnwsers = _context.TeamsChallenges
-         .SelectMany(tc => new[] { tc.Answer, tc.PicturePath, tc.VideoPath })
-         .Where(answer => !string.IsNullOrEmpty(answer));
-            return (TeamChallenge) allAnwsers;
+            var allAnswers = _context.TeamsChallenges
+               .Where(tc => tc.TeamId == teamId)
+               .SelectMany(tc => new[] { tc.Answer, tc.PicturePath, tc.VideoPath })
+               .Where(answer => !string.IsNullOrEmpty(answer));
+
+            return allAnswers;
         }
 
-        public TeamChallenge GetTeamChallenge(int id)
+        public TeamChallenge GetTeamChallenge(int teamId, int challengeId)
+        {
+            return _context.TeamsChallenges
+                .Where(t =>t.TeamId == teamId && t.ChallengeId == challengeId)
+                .FirstOrDefault();
+        }
+
+        public ICollection<TeamChallenge> GetTeamChallenges(int teamId)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<TeamChallenge> GetTeamChallenges()
-        {
-            throw new NotImplementedException();
-        }
-
-        public TeamChallenge GetTeamPointsEarned(int id)
+        public int GetTeamPointsEarned(int teamId)
         {
             throw new NotImplementedException();
         }
     }
 }
+
+ 
+
+      
