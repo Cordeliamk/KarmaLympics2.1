@@ -5,13 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KarmaLympics2._1.Repository
 {
-    public class TeamRepository :ITeamRepository
+    public class TeamRepository(DataContext context) : ITeamRepository
     {
-        private readonly DataContext _context;
-        public TeamRepository(DataContext context)
-        {
-            _context = context;
-        }
+        private readonly DataContext _context = context;
+
         public Team GetTeam(int id)
         {
             return _context.Teams.Where(t => t.Id == id).FirstOrDefault();

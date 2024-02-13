@@ -5,12 +5,8 @@ using System.Reflection.Metadata;
 
 namespace KarmaLympics2._1.Data
 {
-    public class DataContext : DbContext
+    public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
-
-        }
         public DbSet<Challenge> Challenges { get; set; }
         public DbSet<Occasion> Occasions { get; set; }
         public DbSet<Team> Teams { get; set; }

@@ -5,13 +5,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace KarmaLympics2._1.Repository
 {
-    public class TeamChallengeRepository : ITeamChallengeRepository
+    public class TeamChallengeRepository(DataContext context) : ITeamChallengeRepository
     {
-        private readonly DataContext _context;
-        public TeamChallengeRepository(DataContext context)
-        {
-            _context = context;
-        }
+        private readonly DataContext _context = context;
 
         public IEnumerable<string> GetTeamAnswer(int teamId)
         {
@@ -30,12 +26,7 @@ namespace KarmaLympics2._1.Repository
             var teamChallenge = _context.TeamsChallenges
             .FirstOrDefault(t => t.TeamId == teamId && t.ChallengeId == challengeId);
 
-            if (teamChallenge == null)
-            {
-                throw new Exception($"TeamChallenge with TeamId {teamId} and ChallengeId {challengeId} not found.");
-            }
-
-            return teamChallenge;
+            return teamChallenge ?? throw new Exception($"TeamChallenge with TeamId {teamId} and ChallengeId {challengeId} not found.");
         }
 
         public ICollection<TeamChallenge> GetTeamChallenges(int teamId)

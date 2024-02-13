@@ -4,12 +4,10 @@ using KarmaLympics2._1.Models;
 
 namespace KarmaLympics2._1.Repository
 {
-    public class OccasionRepository : IOccasionRepository
+    public class OccasionRepository(DataContext context) : IOccasionRepository
     {
-        private readonly DataContext _context;
-        public OccasionRepository(DataContext context) {
-            _context = context;
-        }
+        private readonly DataContext _context = context;
+
         public Occasion GetOccasion(int id)
         {
             return _context.Occasions.Where(o => o.Id == id).FirstOrDefault();

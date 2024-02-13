@@ -4,14 +4,9 @@ using KarmaLympics2._1.Models;
 
 namespace KarmaLympics2._1.Repository
 {
-    public class ChallengeRepository : IChallangeRepository
+    public class ChallengeRepository(DataContext context) : IChallangeRepository
     {
-        private readonly DataContext _context;
-
-        public ChallengeRepository(DataContext context)
-        {
-            _context = context;
-        }
+        private readonly DataContext _context = context;
 
         public Challenge GetChallenge(int id)
         {
