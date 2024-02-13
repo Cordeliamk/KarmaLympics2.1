@@ -25,7 +25,7 @@ namespace KarmaLympics2._1.Repository
             
         }
 
-        public TeamChallenge GetTeamChallenge(int teamId, int challengeId)
+        public TeamChallenge GetChallengeByTeam(int teamId, int challengeId)
         {
             var teamChallenge = _context.TeamsChallenges
             .FirstOrDefault(t => t.TeamId == teamId && t.ChallengeId == challengeId);
