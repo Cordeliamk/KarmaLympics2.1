@@ -43,22 +43,17 @@ namespace KarmaLympics2._1.Controllers
         [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
 
-        public IActionResult GetChallengePoint(int teamId)
+        public IActionResult GetChallengePoint(int challengeId)
         {
-            if (!_challengeRepository.ChallengeExists(teamId))
+            if (!_challengeRepository.ChallengeExists(challengeId))
                 return NotFound();
 
-            int teamScore = _teamRepository.GetTeamScore(teamId);
+            int challengePoints = _challengeRepository.GetChallengePoint(challengeId);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            return Ok(teamScore);
+            return Ok(challengePoints);
         }
-
-
-
     }
-
-    
 }
