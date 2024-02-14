@@ -12,7 +12,8 @@ namespace KarmaLympics2._1.Interfaces
         Task<int> GetTeamScore(int teamId);
         Task<bool> TeamExists(int teamId);
 
-
+        Task<bool> CreateTeam(Team team);
+        Task<bool> Save();
 
        
 

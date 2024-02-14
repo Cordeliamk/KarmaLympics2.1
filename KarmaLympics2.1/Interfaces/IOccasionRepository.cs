@@ -12,5 +12,6 @@ namespace KarmaLympics2._1.Interfaces
         Task<string> GetOccasionHostMail(int occasionId);
         Task<bool> OccasionExists(int occasionId);
 
+
     }
 }

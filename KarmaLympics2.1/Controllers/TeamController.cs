@@ -3,6 +3,7 @@ using KarmaLympics2._1.Dto;
 using KarmaLympics2._1.Interfaces;
 using KarmaLympics2._1.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 
 
@@ -56,6 +57,38 @@ namespace KarmaLympics2._1.Controllers
                 return BadRequest(ModelState);
 
             return Ok(teamScore);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateTeam([FromBody] TeamDto teamCreate)
+        {
+            if (teamCreate == null)
+                return BadRequest(ModelState);
+
+            ICollection<Team> teams = await _teamRepository.GetTeams();
+            Team team = teams
+              .Where(t => t.TeamName.Trim().ToUpper() == teamCreate.TeamName.TrimEnd().ToUpper())
+              .FirstOrDefault();
+
+            if (team != null)
+            {
+                ModelState.AddModelError("", "TeamName Already exists");
+                return StatusCode(422, ModelState);
+            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            Team teamMap = _mapper.Map<Team>(teamCreate);
+
+            if(! await _teamRepository.CreateTeam(teamMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("Succesfully Created");
+                
         }
     }
 }

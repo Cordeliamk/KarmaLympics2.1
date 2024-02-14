@@ -8,10 +8,10 @@ namespace KarmaLympics2._1.Helper
     {
         public MappingProfiles()
         {
-            CreateMap<Team, TeamDto>();
-            CreateMap<Challenge, ChallengeDto>();
-            CreateMap<Occasion, OccasionDto>();
-            CreateMap<TeamChallenge, TeamChallengeDto>();
+            CreateMap<Team, TeamDto>().ReverseMap();
+            CreateMap<Challenge, ChallengeDto>().ReverseMap();
+            CreateMap<Occasion, OccasionDto>().ReverseMap();
+            CreateMap<TeamChallenge, TeamChallengeDto>().ReverseMap();
         }
     }
 }

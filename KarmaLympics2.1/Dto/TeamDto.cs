@@ -5,7 +5,6 @@
         public int Id { get; set; }
         public string TeamName { get; set; }
         public string TeamUrl { get; set; }
-        public bool ApprovalStatus { get; set; }
-        public int PointsEarned { get; set; }
+        public int TeamScore { get; set; }
     }
 }

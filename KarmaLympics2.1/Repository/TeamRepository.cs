@@ -61,5 +61,16 @@ namespace KarmaLympics2._1.Repository
           .Where(t => t.Id == teamId).Select(t => t.TeamUrl).FirstOrDefaultAsync();
             return teamUrl;
         }
+
+        public async Task<bool> CreateTeam(Team team)
+        {
+                await _context.Teams.AddAsync(team);
+                return await Save();
+        }
+
+        public async Task<bool> Save()
+        {
+                return await _context.SaveChangesAsync() > 0;
+        }
     }
 }
