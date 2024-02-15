@@ -72,5 +72,12 @@ namespace KarmaLympics2._1.Repository
         {
                 return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<IEnumerable<Team>> GetTeamsByOccasionId(int occasionId)
+        {
+            return await _context.Teams
+                .Where(t => t.OccasionId == occasionId)
+                .ToListAsync();
+        }
     }
 }

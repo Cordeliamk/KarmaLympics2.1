@@ -58,5 +58,22 @@ namespace KarmaLympics2._1.Controllers
 
             return Ok(occasionUrl);
         }
+
+
+       
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateOccasion([FromBody] OccasionDto occasionDto)
+        {
+     
+            // Assuming you have saved the occasion to a database and obtained its ID
+
+            // Generate a unique URL for the occasion (e.g., using occasion ID)
+            string occasionUrl = await _occasionRepository(occasionDto.Id);
+
+            // Return the URL to the user
+            return Ok(new { OccasionUrl = occasionUrl });
+        }
     }
 }

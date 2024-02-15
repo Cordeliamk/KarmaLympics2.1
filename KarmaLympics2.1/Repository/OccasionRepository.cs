@@ -2,6 +2,8 @@
 using KarmaLympics2._1.Interfaces;
 using KarmaLympics2._1.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using System.ComponentModel.DataAnnotations;
 
 namespace KarmaLympics2._1.Repository
 {
@@ -39,12 +41,57 @@ namespace KarmaLympics2._1.Repository
             {
                 Console.WriteLine("No Url found");
             }
-            return occasionUrl; 
+            return occasionUrl;
         }
 
         public async Task<bool> OccasionExists(int occasionId)
         {
             return await _context.Occasions.AnyAsync(o => o.Id == occasionId);
+        }
+
+        public async Task<int> ExtractOccasionIdFromUrl(string occasionUrl)
+        {
+            int index = occasionUrl.IndexOf("/pow/");
+            if (index != -1)
+            {
+                // Get the substring after "/occasion/" (which should contain the occasion ID)
+                string substring = occasionUrl.Substring(index + "/pow/".Length);
+                //Split the substring by'-' to seperate the occasion ID from other characters
+                string[] parts = substring.Split('-');
+
+                if (int.TryParse(parts[0], out int occasionID))
+                {
+                    return occasionID;
+                }
+            }
+            else
+            {
+                throw new ArgumentException("Invalid Occasion URL");
+            }
+
+        }
+
+        public async Task<string> GenerateUniqueUrl(int occasionId, string occasionName)
+        {
+           
+            string randomCharacters = await GenerateRandomCharacters();
+            return $"\"https://localhost:portNumber\"/{occasionName}/pow/{occasionId}-{randomCharacters}";
+        }
+
+
+        public async Task<string> GenerateRandomCharacters()
+        {
+            const int length = 8;
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            Random random = new();
+            char[] randomChars = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                randomChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            return new string(randomChars);
         }
     }
 }

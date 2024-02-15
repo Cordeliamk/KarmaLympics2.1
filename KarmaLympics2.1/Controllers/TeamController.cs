@@ -12,9 +12,10 @@ namespace KarmaLympics2._1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TeamController(ITeamRepository teamRepository, IMapper mapper) : ControllerBase
+    public class TeamController(ITeamRepository teamRepository, IOccasionRepository occasionRepository, IMapper mapper) : Controller
     {
         private readonly ITeamRepository _teamRepository = teamRepository;
+        private readonly IOccasionRepository _occasionRepository = occasionRepository;
         private readonly IMapper _mapper = mapper;
 
         [HttpGet]
@@ -62,8 +63,12 @@ namespace KarmaLympics2._1.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateTeam([FromBody] TeamDto teamCreate)
+        public async Task<IActionResult> CreateTeam([FromBody] TeamDto teamCreate, string occasionUrl)
         {
+            int occasionId = ExtractOccasionIdFromUrl(occasionUrl);
+
+            Occasion occasion = await _occasionRepository.GetOccasion(occasionId);
+
             if (teamCreate == null)
                 return BadRequest(ModelState);
 
