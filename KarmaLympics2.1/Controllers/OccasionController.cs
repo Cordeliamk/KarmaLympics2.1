@@ -58,22 +58,26 @@ namespace KarmaLympics2._1.Controllers
 
             return Ok(occasionUrl);
         }
-
-
        
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateOccasion([FromBody] OccasionDto occasionDto)
+        public async Task<IActionResult> CreateOccasion([FromBody] OccasionDto occasionCreate)
         {
-     
-            // Assuming you have saved the occasion to a database and obtained its ID
+            if (occasionCreate == null)
+               return BadRequest(ModelState);
 
             // Generate a unique URL for the occasion (e.g., using occasion ID)
-            string occasionUrl = await _occasionRepository(occasionDto.Id);
+            string occasionUrl = await _occasionRepository.GenerateUniqueUrl(occasionCreate.Id, occasionCreate.OccasionName);
 
-            // Return the URL to the user
-            return Ok(new { OccasionUrl = occasionUrl });
+            Occasion occasionMap = _mapper.Map<Occasion>(occasionCreate);
+
+            if (!await _occasionRepository.CreateOccasion(occasionMap))
+            {
+                ModelState.AddModelError("","Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+            return Ok(new { OccasionUrl = occasionUrl } );
         }
     }
 }

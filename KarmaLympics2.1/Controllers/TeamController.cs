@@ -65,7 +65,7 @@ namespace KarmaLympics2._1.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateTeam([FromBody] TeamDto teamCreate, string occasionUrl)
         {
-            int occasionId = ExtractOccasionIdFromUrl(occasionUrl);
+            int occasionId = await _occasionRepository.ExtractOccasionIdFromUrl(occasionUrl);
 
             Occasion occasion = await _occasionRepository.GetOccasion(occasionId);
 

@@ -64,11 +64,8 @@ namespace KarmaLympics2._1.Repository
                     return occasionID;
                 }
             }
-            else
-            {
-                throw new ArgumentException("Invalid Occasion URL");
-            }
-
+         
+            throw new ArgumentException("Invalid Occasion URL");
         }
 
         public async Task<string> GenerateUniqueUrl(int occasionId, string occasionName)
@@ -77,8 +74,6 @@ namespace KarmaLympics2._1.Repository
             string randomCharacters = await GenerateRandomCharacters();
             return $"\"https://localhost:portNumber\"/{occasionName}/pow/{occasionId}-{randomCharacters}";
         }
-
-
         public async Task<string> GenerateRandomCharacters()
         {
             const int length = 8;
@@ -92,6 +87,16 @@ namespace KarmaLympics2._1.Repository
             }
 
             return new string(randomChars);
+        }
+        public async Task<bool> CreateOccasion(Occasion occasion)
+        {
+            await _context.Occasions.AddAsync(occasion);
+            return await Save();
+        }
+
+        public async Task<bool> Save()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }
