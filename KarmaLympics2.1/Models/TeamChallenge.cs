@@ -4,8 +4,8 @@
     {
         public int TeamId { get; set; }
         public int ChallengeId { get; set; }
-        public Team Team { get; set; }
-        public Challenge Challenge { get; set; }
+        public Team Team { get; set; } = new Team();
+        public Challenge Challenge { get; set; } = new Challenge();
         public string? Answer { get; set; }
         public string? PicturePath { get; set; } 
         public string? VideoPath { get; set; }

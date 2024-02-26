@@ -12,7 +12,7 @@ namespace KarmaLympics2._1.Repository
 
         public async Task<IEnumerable<string>> GetTeamAnswer(int teamId)
         {
-            var allAnswers = await _context.TeamsChallenges
+            List<string?> allAnswers = await _context.TeamsChallenges
                .Where(tc => tc.TeamId == teamId)
                .SelectMany(tc => new[] { tc.Answer, tc.PicturePath, tc.VideoPath })
                .Where(answer => !string.IsNullOrEmpty(answer))

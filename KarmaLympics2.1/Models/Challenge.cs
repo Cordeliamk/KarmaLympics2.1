@@ -10,7 +10,7 @@ namespace KarmaLympics2._1.Models
         public int OccasionId { get; set; }
 
         //Refrence keys
-        public Occasion Occasion { get; set; }
-        public List<TeamChallenge> TeamChallenges { get; set; }
+        public Occasion Occasion { get; set; } = new Occasion();
+        public List<TeamChallenge> TeamChallenges { get; set; } = new List<TeamChallenge>();
     }
 }

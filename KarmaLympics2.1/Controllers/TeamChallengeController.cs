@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KarmaLympics2._1.Controllers
 {
-    public class TeamChallengeController(ITeamChallengeRepository teamChallengeRepository, IMapper mapper) : ControllerBase
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TeamChallengeController(ITeamChallengeRepository teamChallengeRepository, IMapper mapper) : Controller
     {
         private readonly ITeamChallengeRepository _teamChallengeRepository = teamChallengeRepository;
         private readonly IMapper _mapper = mapper;
 
-        [HttpGet]
+        [HttpGet("{cordel} teamAnswers")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<string>))]
         public async Task<IActionResult> GetTeamAnswer(int teamId)
         {

@@ -13,20 +13,22 @@ namespace KarmaLympics2._1.Repository
 
         public async Task<Occasion> GetOccasion(int id)
         {
-            return await _context.Occasions.Where(o => o.Id == id).FirstOrDefaultAsync();
+            return await _context.Occasions.Where(o => o.Id == id).FirstAsync();
         }
 
         public async Task<Occasion> GetOccasionByUrl(string occasionUrl)
         {
-            return await _context.Occasions.Where(o => o.OccasionUrl == occasionUrl).FirstOrDefaultAsync();
+            return await _context.Occasions.Where(o => o.OccasionUrl == occasionUrl).FirstAsync();
         }
 
         public async Task<string> GetOccasionHostMail(int occasionId)
         {
             string hostMail = await _context.Occasions
-                .Where(o => o.Id == occasionId).Select(o => o.HostMail).FirstOrDefaultAsync();
+                .Where(o => o.Id == occasionId).Select(o => o.HostMail).FirstAsync();
             return hostMail;
         }
+
+
 
         public async Task<ICollection<Occasion>> GetOccasions()
         {
@@ -35,7 +37,7 @@ namespace KarmaLympics2._1.Repository
 
         public async Task<string> GetOccasionUrl(int occasionId)
         {
-            string occasionUrl = await _context.Occasions
+           string? occasionUrl = await _context.Occasions
           .Where(o => o.Id == occasionId).Select(o => o.OccasionUrl).FirstAsync();
             if (string.IsNullOrEmpty(occasionUrl))
             {
@@ -49,7 +51,7 @@ namespace KarmaLympics2._1.Repository
             return await _context.Occasions.AnyAsync(o => o.Id == occasionId);
         }
 
-        public async Task<int> ExtractOccasionIdFromUrl(string occasionUrl)
+        public Task<int> ExtractOccasionIdFromUrl(string occasionUrl)
         {
             int index = occasionUrl.IndexOf("/pow/");
             if (index != -1)
@@ -61,7 +63,8 @@ namespace KarmaLympics2._1.Repository
 
                 if (int.TryParse(parts[0], out int occasionID))
                 {
-                    return occasionID;
+
+                    return Task.FromResult (occasionID);
                 }
             }
          
@@ -72,9 +75,9 @@ namespace KarmaLympics2._1.Repository
         {
            
             string randomCharacters = await GenerateRandomCharacters();
-            return $"\"https://localhost:portNumber\"/{occasionName}/pow/{occasionId}-{randomCharacters}";
+            return $"\"https://localhost:5113\"/{occasionName}/pow/{occasionId}-{randomCharacters}";
         }
-        public async Task<string> GenerateRandomCharacters()
+        public  Task<string> GenerateRandomCharacters()
         {
             const int length = 8;
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -85,18 +88,33 @@ namespace KarmaLympics2._1.Repository
             {
                 randomChars[i] = chars[random.Next(chars.Length)];
             }
-
-            return new string(randomChars);
+            return Task.FromResult(new string(randomChars));
         }
+
         public async Task<bool> CreateOccasion(Occasion occasion)
         {
+            
             await _context.Occasions.AddAsync(occasion);
+            
             return await Save();
+
+
+        }
+
+
+        public async Task<bool> UpdateOccasion(Occasion occasion)
+        {
+          
+               _context.Occasions.Update(occasion);
+
+               return await Save();
         }
 
         public async Task<bool> Save()
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+
     }
 }

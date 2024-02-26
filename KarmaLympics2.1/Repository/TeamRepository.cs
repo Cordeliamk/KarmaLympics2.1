@@ -11,16 +11,16 @@ namespace KarmaLympics2._1.Repository
 
         public async Task<Team> GetTeam(int id)
         {
-            return await _context.Teams.Where(t => t.Id == id).FirstOrDefaultAsync();
+            return await _context.Teams.Where(t => t.Id == id).FirstAsync();
         }
          
         public async Task<Team> GetTeam(string teamName)
         {
-            return await _context.Teams.Where(t => t.TeamName == teamName).FirstOrDefaultAsync();
+            return await _context.Teams.Where(t => t.TeamName == teamName).FirstAsync();
         }
         public async Task<Team> GetTeamByUrl(string teamUrl)
         {
-            return await _context.Teams.Where(t => t.TeamUrl == teamUrl).FirstOrDefaultAsync();
+            return await _context.Teams.Where(t => t.TeamUrl == teamUrl).FirstAsync();
         }
         public async Task<ICollection<Team>> GetTeams()
         {

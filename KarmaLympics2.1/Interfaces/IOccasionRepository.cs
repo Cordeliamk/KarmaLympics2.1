@@ -15,6 +15,9 @@ namespace KarmaLympics2._1.Interfaces
         Task<string> GenerateRandomCharacters();
         Task<string> GenerateUniqueUrl(int occasionId, string occasionName);
         Task<bool> CreateOccasion(Occasion occasion);
+
+        Task<bool> UpdateOccasion(Occasion occasion);
+
         Task<bool> Save();
     }
 }

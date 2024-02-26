@@ -2,7 +2,6 @@
 {
     public class OccasionDto
     {
-        public int Id { get; set; }
         public string OccasionName { get; set; }
         public string? OccasionDescription { get; set; }
         public string HostName { get; set; }

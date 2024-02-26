@@ -11,7 +11,7 @@ namespace KarmaLympics2._1.Repository
 
         public async Task<Challenge> GetChallenge(int id)
         {
-            return await _context.Challenges.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return await _context.Challenges.Where(c => c.Id == id).FirstAsync();
         }
 
         public async Task<int> GetChallengePoint(int id)

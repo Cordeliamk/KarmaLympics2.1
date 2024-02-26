@@ -19,9 +19,9 @@ namespace KarmaLympics2._1
             builder.Services.AddTransient<Seed>();
             //Just incase we get loop problems with our many to many relationship: 
 
-            ////builder.Services.AddControllers().AddJsonOptions(x =>
-            ////x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-            
+            //builder.Services.AddControllers().AddJsonOptions(x =>
+            //x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddScoped<IOccasionRepository, OccasionRepository>();
             builder.Services.AddScoped<ITeamRepository, TeamRepository>();

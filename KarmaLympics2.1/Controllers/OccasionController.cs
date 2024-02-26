@@ -8,7 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KarmaLympics2._1.Controllers
 {
-    public class OccasionController(IOccasionRepository occasionRepository, IMapper mapper) : ControllerBase
+    [Route("api/[controller]")]
+    [ApiController]
+    public class OccasionController(IOccasionRepository occasionRepository, IMapper mapper) : Controller
     {
         private readonly IOccasionRepository _occasionRepository = occasionRepository;
         private readonly IMapper _mapper = mapper;
@@ -68,11 +70,23 @@ namespace KarmaLympics2._1.Controllers
                return BadRequest(ModelState);
 
             // Generate a unique URL for the occasion (e.g., using occasion ID)
-            string occasionUrl = await _occasionRepository.GenerateUniqueUrl(occasionCreate.Id, occasionCreate.OccasionName);
-
             Occasion occasionMap = _mapper.Map<Occasion>(occasionCreate);
 
             if (!await _occasionRepository.CreateOccasion(occasionMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+
+            int occasionId = occasionMap.Id;
+
+
+            string occasionUrl = await _occasionRepository.GenerateUniqueUrl(occasionId, occasionCreate.OccasionName);
+
+
+            occasionMap.OccasionUrl = occasionUrl;
+
+            if (!await _occasionRepository.UpdateOccasion(occasionMap))
             {
                 ModelState.AddModelError("","Something went wrong while saving");
                 return StatusCode(500, ModelState);
