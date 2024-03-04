@@ -32,5 +32,25 @@ namespace KarmaLympics2._1.Repository
         {
             return await _context.Challenges.AnyAsync(c => c.Id == challengeId);
         }
+
+        public async Task<bool> CreateChallenge(Challenge challenge)
+        {
+            await _context.Challenges.AddAsync(challenge);
+            return await Save();
+        }
+
+
+        public async Task<bool> UpdateChallenge(Challenge challenge)
+        {
+
+             _context.Challenges.Update(challenge);
+
+            return await Save();
+        }
+
+        public async Task<bool> Save()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

@@ -73,7 +73,7 @@ namespace KarmaLympics2._1.Controllers
                 return BadRequest(ModelState);
 
             ICollection<Team> teams = await _teamRepository.GetTeams();
-            Team team = teams
+            Team? team = teams
               .Where(t => t.TeamName.Trim().ToUpper() == teamCreate.TeamName.TrimEnd().ToUpper())
               .FirstOrDefault();
 
@@ -87,13 +87,27 @@ namespace KarmaLympics2._1.Controllers
 
             Team teamMap = _mapper.Map<Team>(teamCreate);
 
-            if(! await _teamRepository.CreateTeam(teamMap))
+            teamMap.OccasionId = occasionId;
+
+
+            if (!await _teamRepository.CreateTeam(teamMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
-            return Ok("Succesfully Created");
-                
+
+            int teamId = teamMap.Id;
+
+            string teamUrl = await _teamRepository.GenerateUniqueTeamUrl(occasionId, teamId, teamCreate.TeamName);
+
+            teamMap.TeamUrl = teamUrl;
+           
+            if (!await _teamRepository.UpdateTeam(teamMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+            return Ok(new { TeamUrl = teamUrl });
         }
     }
 }

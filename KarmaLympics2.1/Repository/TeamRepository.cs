@@ -68,6 +68,15 @@ namespace KarmaLympics2._1.Repository
                 return await Save();
         }
 
+
+        public async Task<bool> UpdateTeam(Team team)
+        {
+
+            _context.Teams.Update(team);
+
+            return await Save();
+        }
+
         public async Task<bool> Save()
         {
                 return await _context.SaveChangesAsync() > 0;
@@ -78,6 +87,27 @@ namespace KarmaLympics2._1.Repository
             return await _context.Teams
                 .Where(t => t.OccasionId == occasionId)
                 .ToListAsync();
+        }
+
+        public async Task<string> GenerateUniqueTeamUrl(int occationId, int teamId, string teamName)
+        {
+
+            string randomCharacters = await GenerateRandomCharacters();
+            return $"\"https://localhost:5113\"/{teamName}/pow/{teamId}/{occationId}-{randomCharacters}";
+        }
+
+        public Task<string> GenerateRandomCharacters()
+        {
+            const int length = 8;
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            Random random = new();
+            char[] randomChars = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                randomChars[i] = chars[random.Next(chars.Length)];
+            }
+            return Task.FromResult(new string(randomChars));
         }
     }
 }

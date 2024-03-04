@@ -9,5 +9,9 @@ namespace KarmaLympics2._1.Interfaces
         Task<int> GetChallengePoint(int id);
 
         Task<bool> ChallengeExists(int challengeId);
+
+        Task<bool> CreateChallenge(Challenge challenge);
+
+        Task<bool> UpdateChallenge(Challenge challenge)
     }
 }

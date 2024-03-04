@@ -14,8 +14,9 @@ namespace KarmaLympics2._1.Interfaces
 
         Task<bool> CreateTeam(Team team);
         Task<bool> Save();
-
-       
+        Task<bool> UpdateTeam(Team team);
+        Task<string> GenerateRandomCharacters();
+        Task<string> GenerateUniqueTeamUrl(int occasionId, int teamId, string teamName);
 
 
 
