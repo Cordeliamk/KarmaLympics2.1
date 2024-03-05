@@ -60,14 +60,12 @@ namespace KarmaLympics2._1.Controllers
             return Ok(teamScore);
         }
 
-        [HttpPost]
+        [HttpPost("{occasionId}/occasionId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateTeam([FromBody] TeamDto teamCreate, string occasionUrl)
+        public async Task<IActionResult> CreateTeam(int occasionId, [FromBody] TeamDto teamCreate)
         {
-            int occasionId = await _occasionRepository.ExtractOccasionIdFromUrl(occasionUrl);
-
-            Occasion occasion = await _occasionRepository.GetOccasion(occasionId);
+            ////Occasion occasion = await _occasionRepository.GetOccasion(occasionId);
 
             if (teamCreate == null)
                 return BadRequest(ModelState);

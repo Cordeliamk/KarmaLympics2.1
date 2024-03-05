@@ -55,5 +55,26 @@ namespace KarmaLympics2._1.Controllers
 
             return Ok(challengePoints);
         }
+
+
+        [HttpPost("{occasionId}/occasionId")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateChallenge(int occasionId, [FromBody] ChallengeDto challengeCreate)
+        {
+            if (challengeCreate == null)
+                return BadRequest(ModelState);
+          
+
+            Challenge challengeMap = _mapper.Map<Challenge>(challengeCreate);
+            challengeMap.OccasionId = occasionId;
+
+            if (!await _challengeRepository.CreateChallenge(challengeMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("Successfully created");
+        }
     }
 }

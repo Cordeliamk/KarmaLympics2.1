@@ -77,6 +77,10 @@ namespace KarmaLympics2._1.Repository
             return await Save();
         }
 
+        // AwnserChallenge
+        //public async Task<bool> AnswerChallenge()
+
+
         public async Task<bool> Save()
         {
                 return await _context.SaveChangesAsync() > 0;

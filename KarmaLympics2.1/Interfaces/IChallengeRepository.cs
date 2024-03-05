@@ -12,6 +12,8 @@ namespace KarmaLympics2._1.Interfaces
 
         Task<bool> CreateChallenge(Challenge challenge);
 
-        Task<bool> UpdateChallenge(Challenge challenge)
+        Task<bool> UpdateChallenge(Challenge challenge);
+
+        Task<bool> Save();
     }
 }
