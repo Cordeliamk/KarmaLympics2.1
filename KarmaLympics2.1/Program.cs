@@ -13,6 +13,12 @@ namespace KarmaLympics2._1
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddControllers()
+           .AddJsonOptions(options =>
+             {
+              options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+              options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+             });
             // Add services to the container.
 
             builder.Services.AddControllers();

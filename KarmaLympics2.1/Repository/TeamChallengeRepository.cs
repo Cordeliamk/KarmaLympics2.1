@@ -29,6 +29,8 @@ namespace KarmaLympics2._1.Repository
             return teamChallenge ?? throw new Exception($"TeamChallenge with TeamId {teamId} and ChallengeId {challengeId} not found.");
         }
 
+    
+
         public async Task<ICollection<TeamChallenge>> GetTeamChallenges(int teamId)
         {
            return await _context.TeamsChallenges.OrderBy(tc => tc.TeamId).ToListAsync();
@@ -41,6 +43,30 @@ namespace KarmaLympics2._1.Repository
                 .Select(tc => tc.PointsEarned)
                 .FirstOrDefaultAsync();
             return pointsEarned;
+        }
+
+
+
+        public async Task<bool> AddAnswer(TeamChallenge teamChallenge)
+        {
+
+            await _context.TeamsChallenges.AddAsync(teamChallenge);
+            return await Save();
+        }
+
+        public async Task<ICollection<TeamChallenge>> GetTeamChallengesByOccasionId(int occasionId)
+        {
+            return await _context.TeamsChallenges
+                .Include(tc => tc.Team)
+                .ThenInclude( t => t.Occasion)
+                .Where(tc => tc.Team.OccasionId == occasionId)
+                .OrderBy(tc => tc.TeamId)
+                .ToListAsync();
+        }
+
+        public async Task<bool> Save()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

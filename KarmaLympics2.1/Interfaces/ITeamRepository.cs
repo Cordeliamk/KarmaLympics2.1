@@ -9,6 +9,7 @@ namespace KarmaLympics2._1.Interfaces
         Task<Team> GetTeam (int id);
         Task<Team> GetTeam (string teamName);
         Task<Team> GetTeamByUrl(string teamUrl);
+
         Task<int> GetTeamScore(int teamId);
         Task<bool> TeamExists(int teamId);
 
@@ -17,11 +18,6 @@ namespace KarmaLympics2._1.Interfaces
         Task<bool> UpdateTeam(Team team);
         Task<string> GenerateRandomCharacters();
         Task<string> GenerateUniqueTeamUrl(int occasionId, int teamId, string teamName);
-
-
-
-
-
-
+        Task<ICollection<Team>> GetTeamsByOccasionId(int occasionId);
     }
 }

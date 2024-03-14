@@ -13,7 +13,7 @@ namespace KarmaLympics2._1.Repository
         {
             return await _context.Teams.Where(t => t.Id == id).FirstAsync();
         }
-         
+
         public async Task<Team> GetTeam(string teamName)
         {
             return await _context.Teams.Where(t => t.TeamName == teamName).FirstAsync();
@@ -24,8 +24,26 @@ namespace KarmaLympics2._1.Repository
         }
         public async Task<ICollection<Team>> GetTeams()
         {
-            return await _context.Teams.OrderBy( t => t.Id).ToListAsync(); 
+            return await _context.Teams.OrderBy(t => t.Id).ToListAsync();
         }
+
+        public async Task<ICollection<Team>> GetTeamsByOccasionId(int occasionId)
+        {
+            return await _context.Teams
+                .Where(t => t.OccasionId == occasionId)
+                .OrderBy(t => t.Id).ToListAsync();
+        }
+
+        
+
+
+        ////public async Task<ICollection<TeamChallenge>> GetTeamChallengesByOccasionId(int occasionId)
+        ////{
+        ////    List<TeamChallenge> teamchallenges = await _context.TeamsChallenges
+        ////        .Include(_context.Occasion)
+        ////        .OrderBy(tc => tc.TeamId).ToListAsync();
+        ////}
+
 
         //public object GetTeamScore(int teamId)
         //{
@@ -43,15 +61,15 @@ namespace KarmaLympics2._1.Repository
 
         public async Task<bool> TeamExists(int teamId)
         {
-          return await _context.Teams.AnyAsync(t => t.Id ==  teamId);
+            return await _context.Teams.AnyAsync(t => t.Id == teamId);
         }
 
         public async Task<int> GetTeamScore(int teamId)
         {
-               int teamScore = await _context.Teams
-                .Where(t => t.Id == teamId)
-                .Select(t => t.TeamScore)
-                .FirstOrDefaultAsync();
+            int teamScore = await _context.Teams
+             .Where(t => t.Id == teamId)
+             .Select(t => t.TeamScore)
+             .FirstOrDefaultAsync();
             return teamScore;
         }
 
@@ -64,8 +82,8 @@ namespace KarmaLympics2._1.Repository
 
         public async Task<bool> CreateTeam(Team team)
         {
-                await _context.Teams.AddAsync(team);
-                return await Save();
+            await _context.Teams.AddAsync(team);
+            return await Save();
         }
 
 
@@ -78,7 +96,7 @@ namespace KarmaLympics2._1.Repository
         }
 
         // AwnserChallenge
-        //public async Task<bool> AnswerChallenge()
+       
 
 
         public async Task<bool> Save()
@@ -86,12 +104,7 @@ namespace KarmaLympics2._1.Repository
                 return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<IEnumerable<Team>> GetTeamsByOccasionId(int occasionId)
-        {
-            return await _context.Teams
-                .Where(t => t.OccasionId == occasionId)
-                .ToListAsync();
-        }
+       
 
         public async Task<string> GenerateUniqueTeamUrl(int occationId, int teamId, string teamName)
         {
@@ -113,5 +126,11 @@ namespace KarmaLympics2._1.Repository
             }
             return Task.FromResult(new string(randomChars));
         }
+
+
+
+
+
+
     }
 }

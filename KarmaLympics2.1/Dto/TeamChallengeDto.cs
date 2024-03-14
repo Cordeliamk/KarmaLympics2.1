@@ -2,6 +2,8 @@
 {
     public class TeamChallengeDto
     {
+        public int TeamId { get; set; }
+        public int ChallengeId { get; set; }
         public bool ApprovalStatus { get; set; }
         public string? Answer { get; set; }
         public string? PicturePath { get; set; }

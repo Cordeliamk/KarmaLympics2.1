@@ -10,9 +10,10 @@ namespace KarmaLympics2._1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ChallengeController(IChallengeRepository challengeRepository, IMapper mapper) : Controller
+    public class ChallengeController(IChallengeRepository challengeRepository, IOccasionRepository occasionRepository, IMapper mapper) : Controller
     {
         private readonly IChallengeRepository _challengeRepository = challengeRepository;
+        private readonly IOccasionRepository _occasionRepository = occasionRepository;
         private readonly IMapper _mapper = mapper;
 
         [HttpGet]
@@ -57,17 +58,17 @@ namespace KarmaLympics2._1.Controllers
         }
 
 
-        [HttpPost("{occasionId}/occasionId")]
+        [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateChallenge(int occasionId, [FromBody] ChallengeDto challengeCreate)
+        public async Task<IActionResult> CreateChallenge([FromQuery] int occasionId, [FromBody] ChallengeDto challengeCreate)
         {
             if (challengeCreate == null)
                 return BadRequest(ModelState);
           
 
             Challenge challengeMap = _mapper.Map<Challenge>(challengeCreate);
-            challengeMap.OccasionId = occasionId;
+            challengeMap.Occasion = await _occasionRepository.GetOccasion(occasionId);
 
             if (!await _challengeRepository.CreateChallenge(challengeMap))
             {

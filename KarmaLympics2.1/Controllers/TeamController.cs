@@ -22,7 +22,7 @@ namespace KarmaLympics2._1.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Team>))]
         public async Task<IActionResult> GetTeams()
         {
-            var teams = _mapper.Map<List<TeamDto>>( await _teamRepository.GetTeams());
+            var teams = _mapper.Map<List<TeamDto>>(await _teamRepository.GetTeams());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -30,16 +30,29 @@ namespace KarmaLympics2._1.Controllers
             return Ok(teams);
         }
 
+        [HttpGet("occasionId")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Team>))]
+        public async Task<IActionResult> GetTeamsByOccasionId(int occasionId)
+        {
+            var teamsByOccasionId = _mapper.Map<List<TeamDto>>(await _teamRepository.GetTeamsByOccasionId(occasionId));
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(teamsByOccasionId);
+        }
+
+
         [HttpGet("teamId")]
         [ProducesResponseType(200, Type = typeof(Team))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetTeam(int teamId)
         {
-            if(! await _teamRepository.TeamExists(teamId))
+            if (!await _teamRepository.TeamExists(teamId))
                 return NotFound();
 
-            TeamDto team = _mapper.Map<TeamDto>( await _teamRepository.GetTeam(teamId));
-            if(!ModelState.IsValid)
+            TeamDto team = _mapper.Map<TeamDto>(await _teamRepository.GetTeam(teamId));
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(team);
         }
@@ -49,7 +62,7 @@ namespace KarmaLympics2._1.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetTeamScore(int teamId)
         {
-            if (! await _teamRepository.TeamExists(teamId))
+            if (!await _teamRepository.TeamExists(teamId))
                 return NotFound();
 
             int teamScore = await _teamRepository.GetTeamScore(teamId);
@@ -60,12 +73,11 @@ namespace KarmaLympics2._1.Controllers
             return Ok(teamScore);
         }
 
-        [HttpPost("{occasionId}/occasionId")]
+        [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateTeam(int occasionId, [FromBody] TeamDto teamCreate)
+        public async Task<IActionResult> CreateTeam([FromQuery]int occasionId, [FromBody] TeamDto teamCreate)
         {
-            ////Occasion occasion = await _occasionRepository.GetOccasion(occasionId);
 
             if (teamCreate == null)
                 return BadRequest(ModelState);
@@ -84,8 +96,7 @@ namespace KarmaLympics2._1.Controllers
                 return BadRequest(ModelState);
 
             Team teamMap = _mapper.Map<Team>(teamCreate);
-
-            teamMap.OccasionId = occasionId;
+            teamMap.Occasion =  await _occasionRepository.GetOccasion(occasionId);
 
 
             if (!await _teamRepository.CreateTeam(teamMap))
@@ -99,7 +110,7 @@ namespace KarmaLympics2._1.Controllers
             string teamUrl = await _teamRepository.GenerateUniqueTeamUrl(occasionId, teamId, teamCreate.TeamName);
 
             teamMap.TeamUrl = teamUrl;
-           
+
             if (!await _teamRepository.UpdateTeam(teamMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
@@ -107,5 +118,6 @@ namespace KarmaLympics2._1.Controllers
             }
             return Ok(new { TeamUrl = teamUrl });
         }
+
     }
 }

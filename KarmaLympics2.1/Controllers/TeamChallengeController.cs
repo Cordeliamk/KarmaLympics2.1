@@ -10,10 +10,13 @@ namespace KarmaLympics2._1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TeamChallengeController(ITeamChallengeRepository teamChallengeRepository, IMapper mapper) : Controller
+    public class TeamChallengeController(ITeamChallengeRepository teamChallengeRepository, IChallengeRepository challengeRepositry, IOccasionRepository occasionRepository,  ITeamRepository teamRepository, IMapper mapper) : Controller
     {
         private readonly ITeamChallengeRepository _teamChallengeRepository = teamChallengeRepository;
         private readonly IMapper _mapper = mapper;
+        private readonly ITeamRepository _teamRepository = teamRepository;
+        private readonly IChallengeRepository _challengeRepository = challengeRepositry;
+        private readonly IOccasionRepository _OccasionRepository = occasionRepository;
 
         [HttpGet("{cordel} teamAnswers")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<string>))]
@@ -47,6 +50,19 @@ namespace KarmaLympics2._1.Controllers
             return Ok(teamChallenges);
         }
 
+
+        [HttpGet("occasionId")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<TeamChallenge>))]
+        public async Task<IActionResult> GetTeamChallengesByOccasionId(int occasionId)
+        {
+            var teamChallengesByOccasionId = _mapper.Map<List<TeamChallengeDto>>(await _teamChallengeRepository.GetTeamChallengesByOccasionId(occasionId));
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(teamChallengesByOccasionId);
+        }
+
         [HttpGet("{teamId}/teamPointsEarned/{challengeId}")]
         [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
@@ -58,5 +74,35 @@ namespace KarmaLympics2._1.Controllers
             return Ok(teamPointsEarned);
         }
 
+        [HttpPost] // add
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> AddAnswer([FromQuery]int challengeId, [FromQuery] int teamId, [FromQuery ]int occasionId, [FromBody] TeamChallengeDto teamChallengeCreate)
+        {
+            if (teamChallengeCreate == null) {
+                return BadRequest(ModelState);
+            }
+
+            TeamChallenge teamChallengeMap = _mapper.Map<TeamChallenge>(teamChallengeCreate);
+
+            teamChallengeMap.Team.OccasionId = occasionId;
+
+            teamChallengeMap.Team = await _teamRepository.GetTeam(teamId);
+            teamChallengeMap.Challenge = await _challengeRepository.GetChallenge(challengeId);
+            if (teamChallengeMap.Team.OccasionId == occasionId && teamChallengeMap.Challenge.OccasionId == occasionId)
+            {
+                if (!await _teamChallengeRepository.AddAnswer(teamChallengeMap))
+                {
+                    ModelState.AddModelError("", "Something went wrong while saving");
+                    return StatusCode(500, ModelState);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", " OccasionId");
+                return StatusCode(500, ModelState);
+            }
+            return Ok(teamChallengeMap);
+        }
     }
 }
