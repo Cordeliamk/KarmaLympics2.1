@@ -1,7 +1,6 @@
 ﻿using KarmaLympics2._1.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using System.Reflection.Metadata;
+
 
 namespace KarmaLympics2._1.Data
 {

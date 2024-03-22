@@ -1,7 +1,6 @@
 ﻿using KarmaLympics2._1.Data;
 using KarmaLympics2._1.Interfaces;
 using KarmaLympics2._1.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace KarmaLympics2._1.Repository
